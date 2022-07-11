@@ -297,10 +297,10 @@ bool Matrix::determinant(Fraction &det) const{
 
 void Matrix::extractDiag() {
     for (int i = 0; i < n_row; i++)
-        for (int j = 0; j < n_row; j++) {
+        for (int j = 0; j < n_col; j++) {
             if (i != j) {
-                values[i * n_col + j].setNum(1);
-                values[i * n_col + j].setDen(0);
+                values[i * n_col + j].setNum(0);
+                values[i * n_col + j].setDen(1);
             }
         }
 }
@@ -314,7 +314,7 @@ void Matrix::deleteDiag() {
 
 void Matrix::extractUpper(){
     for (int i = 0; i < n_row; i++)
-        for (int j = 0; j < n_row; j++) {
+        for (int j = 0; j < n_col; j++) {
             if (i > j) {
                 values[i * n_col + j].setNum(0);
                 values[i * n_col + j].setDen(1);
@@ -324,7 +324,7 @@ void Matrix::extractUpper(){
 
 void Matrix::extractLower(){
     for (int i = 0; i < n_row; i++)
-        for (int j = 0; j < n_row; j++) {
+        for (int j = 0; j < n_col; j++) {
             if (i < j) {
                 values[i * n_col + j].setNum(0);
                 values[i * n_col + j].setDen(1);
