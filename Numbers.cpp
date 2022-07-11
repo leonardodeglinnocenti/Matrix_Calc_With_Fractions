@@ -5,59 +5,29 @@
 #include "Numbers.h"
 #include <iostream>
 
+int getCommonDivider(int a, int b) {
+    /* Details can be found in the following link
+     * https://ocw.mit.edu/courses/mathematics-for-computer-science/resources/mit6_042js15_textbook/
+     * Contribution by Habib Kirollos */
+    int tmp;
+    while(b){
+        tmp = b;
+        b = a%b;
+        a = tmp;
+    }
+    return a;
+}
+
 void Fraction::simplify() {
-
-    if (num != 0 && den % num == 0){
-        den = den/num;
-        num = 1;
-    }
-    else if (den != 0 && num % den == 0){ // den != 0 added to avoid the division by zero that could occur.
-        num = num/den;
-        den = 1;
-    }
-
-    int count, div;
-    bool found;
-    if (den != 1 && num != 1) {
-        do {
-            if (std::abs(num) > std::abs(den)) {
-                count = 2; // first attempt to find a divider
-                found = false;
-                while (count < std::abs(den) && found == false){
-                    if (num % count == 0 && den % count == 0) {
-                        div = count;
-                        found = true;
-                    }
-                    count++;
-                }
-                if (found == true) {
-                    num = num / div;
-                    den = den / div;
-                }
-            } else {
-                count = 2;
-                found = false;
-                while (count < std::abs(num) && found == false){
-                    if (num % count == 0 && den % count == 0) {
-                        div = count;
-                        found = true;
-                    }
-                    count++;
-                }
-                if (found == true) {
-                    num = num / div;
-                    den = den / div;
-                }
-            }
-        } while (found == true);
-    }
-
-    //checks if den < 0, in that case it puts '-' before num instead of den
+    if(den == 0)
+        return;
+    int common = getCommonDivider(std::abs(num), std::abs(den));
+    num = num/common;
+    den = den/common;
     if (den < 0) {
         num = -num;
         den = -den;
     }
-
 }
 
 void Fraction::input() {
@@ -89,7 +59,7 @@ void Fraction::input() {
     else {
         for (int i = 0; i < input.length(); i++){
             first += input[i];
-            if (isFloat == false && input[i] == '.')
+            if (!isFloat && input[i] == '.')
                 isFloat = true;
         }
         if (isFloat) {
@@ -255,7 +225,7 @@ void Fraction::makeFraction(std::string input) {
     bool dot_found = false;
     int pos_dot = -1;
 
-    for (int i = 0; i < input.length() && dot_found== false; i++) {
+    for (int i = 0; i < input.length() && !dot_found; i++) {
         if (input[i] == '.') {
             dot_found = true;
         }

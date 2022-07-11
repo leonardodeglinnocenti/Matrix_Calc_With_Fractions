@@ -171,7 +171,7 @@ bool Matrix::swapColumns(int col1, int col2) {
 
 bool Matrix::partialPivoting(int firstRow, int firstCol) {
     Fraction max;
-    int rowmax = firstRow;
+    int rowMax = firstRow;
     bool no_error = true;
     if (isRow(firstRow) && isCol(firstCol)) {
         max = values[firstRow * n_col + firstCol];
@@ -179,11 +179,11 @@ bool Matrix::partialPivoting(int firstRow, int firstCol) {
         for (int i = firstRow + 1; i < n_row; i++) {
             if (values[i * n_col + firstCol] > max) {
                 max = values[i * n_col + firstCol];
-                rowmax = i;
+                rowMax = i;
             }
         }
-        if(rowmax != firstRow) {
-            swapRows(firstRow, rowmax);
+        if(rowMax != firstRow) {
+            swapRows(firstRow, rowMax);
         }
     }
     else no_error = false;
